@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <string.h>
 #include <fstream>
 #include <istream>
 #include <sstream>
@@ -33,9 +34,41 @@ bool isConflictive(Student s, Course c)
     return false;
 }
 
-void printCsv(vector<string> line_data)
+vector<string> split(const string& str, const string& delim) {
+	vector<string> res;
+	if("" == str) return res;
+	char * strs = new char[str.length() + 1];
+	strcpy(strs, str.c_str()); 
+ 
+	char * d = new char[delim.length() + 1];
+	strcpy(d, delim.c_str());
+ 
+	char * p = strtok(strs, d);
+	while(p) {
+		string s = p;
+		res.push_back(s);
+		p = strtok(NULL, d);
+	}
+ 
+	return res;
+}
+
+void InitCourse(string line_data)
 {
-	cout << line_data[0] << line_data[1] << line_data[2] << endl;
+    vector<Course> courses;
+    // cout << line_data << endl;
+    vector<string> str = split(line_data, ",");
+    // for(vector<string>::iterator str = line_data.begin(); str != line_data.end(); str++)
+    // {
+        // string weeks = str[0];
+        // cout << weeks << endl;
+        // string days = str[1];
+        // cout << days << endl;
+        // string lessons = str[2];
+        // cout << lessons << endl;
+    // }
+
+    // return courses;
 }
 
 void ReadCsv()
@@ -53,6 +86,7 @@ void ReadCsv()
 
 	getline(csv_data, line);
 	istringstream sin;
+    vector<Course> courses;
 	while (getline(csv_data, line))
 	{
 		words.clear();
@@ -61,9 +95,10 @@ void ReadCsv()
 		while (getline(sin, word))
 		{
 			cout << word << endl;
+            word.erase(remove(word.begin(), word.end(), '"'), word.end());
 			words.push_back(word);
+            InitCourse(word);
 		}
-		printCsv(words);
     }
 	csv_data.close();
 }
@@ -71,7 +106,7 @@ void ReadCsv()
 int main()
 {
     ReadCsv();
-    
+
     Course c1, c2, c3, c4;
     Student s;
 
