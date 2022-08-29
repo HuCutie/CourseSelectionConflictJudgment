@@ -1,5 +1,10 @@
 #include <iostream>
 #include <algorithm>
+#include <string>
+#include <fstream>
+#include <istream>
+#include <sstream>
+#include <streambuf>
 #include "student.cpp"
 
 using namespace std;
@@ -28,8 +33,45 @@ bool isConflictive(Student s, Course c)
     return false;
 }
 
+void printCsv(vector<string> line_data)
+{
+	cout << line_data[0] << line_data[1] << line_data[2] << endl;
+}
+
+void ReadCsv()
+{
+    ifstream csv_data("data.csv", ios::in);
+    if (!csv_data.is_open())
+	{
+		cout << "Error: opening file fail" << endl;
+		exit(1);
+	}
+
+    vector<string> words;
+	string word;
+    string line;
+
+	getline(csv_data, line);
+	istringstream sin;
+	while (getline(csv_data, line))
+	{
+		words.clear();
+		sin.clear();
+		sin.str(line);
+		while (getline(sin, word))
+		{
+			cout << word << endl;
+			words.push_back(word);
+		}
+		printCsv(words);
+    }
+	csv_data.close();
+}
+
 int main()
 {
+    ReadCsv();
+    
     Course c1, c2, c3, c4;
     Student s;
 
