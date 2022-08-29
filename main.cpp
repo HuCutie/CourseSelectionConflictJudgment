@@ -32,11 +32,23 @@ int main()
 {
     Course c1, c2, c3, c4;
     Student s;
+
+    c1.time.week = {6, 7, 8};
+    c1.time.day = {1};
+    c1.time.lesson = {1, 2, 3, 4};
+
+    c2.time.week = {6, 7, 8};
+    c2.time.day = {1};
+    c2.time.lesson = {1, 2, 3, 4};
+
+    c3.time.week = {6, 7, 8};
+    c3.time.day = {1};
+    c3.time.lesson = {1, 2, 3, 4};
+
     s.AddCourse(c1);
     s.AddCourse(c2);
-    s.AddCourse(c3);
 
-    cout << isConflictive(s, c4) << endl;
+    cout << isConflictive(s, c3) << endl;
 
     return 0;
 }
